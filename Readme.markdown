@@ -1,0 +1,1 @@
+`node server.js` to start server and navigate to localhost:3000
