@@ -1,14 +1,25 @@
-var express = require('express')
-var app = express()
-var path = require('path')
+var app = require('express')()
+var server = require('http').Server(app)
+var io = require('socket.io')(server)
 
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + '/index.html'));
-})
-
-app.listen(3000, function () {
+server.listen(3000, function () {
   console.log('Encrypto listening on port 3000!')
 })
 
-// Up and running via https://expressjs.com/en/starter/hello-world.html
-// Serving files via https://scotch.io/tutorials/use-expressjs-to-deliver-html-files
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
+})
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' })
+  socket.on('my other event', function (data) {
+    console.log(data)
+  })
+})
+
+/*
+  Up and running via https://expressjs.com/en/starter/hello-world.html
+  Serving files via https://scotch.io/tutorials/use-expressjs-to-deliver-html-files
+  Setup sockets via http://socket.io/docs/
+    and http://stackoverflow.com/questions/24526166/socketio-err-connection-refused
+*/
