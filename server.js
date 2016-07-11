@@ -14,6 +14,11 @@ io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' })
   socket.on('my other event', function (data) {
     console.log(data)
+
+    // Crypto
+    var SHA256 = require("crypto-js/sha256")
+    var message = "Hi, there."
+    console.log('Message: %s; Encrypted: %s', message, SHA256(message))
   })
 })
 
